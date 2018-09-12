@@ -1,7 +1,9 @@
-FROM alpine:3.5
+FROM rust:1.28.0-slim-stretch
+ADD . /source
+WORKDIR /source
+
 EXPOSE 3030
-RUN mkdir /app
-WORKDIR /app
-COPY ./target/release/zeit-sample /app/zeit-sample
-RUN chmod 755 /app/zeit-sample
-CMD ["/app/zeit-sample"]
+RUN rustc -V
+
+RUN cargo build --release
+CMD cargo run --release
